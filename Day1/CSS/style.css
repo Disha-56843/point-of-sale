@@ -1,0 +1,241 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body
+{
+    /* width: 90%; */
+    height: auto;
+    margin: auto;
+    /* margin-top: 2%; */
+}
+.part1
+{
+    width: 60%;
+    height: 100vh;
+    float: left;
+    position: relative;
+}
+.part2
+{
+    box-shadow: 2px 0px 5px #666 inset;
+    width: 40%;
+    float: right;
+}
+.head
+{
+    margin-top: 4%;
+    margin-left: 5%;   
+}
+p
+{
+    margin-top: 1%;
+    margin-left: 5%;
+    font-size: small;
+}
+ol
+{
+    list-style: none;
+    margin-top: 5%;
+    margin-left: 4%;
+}
+li
+{
+    display: inline;
+    margin: 0 2% 0 0;
+}
+.card
+{
+    border-radius: 15px;
+    width: 28%;
+    height: 30vh;
+    padding: 1%;
+}
+.card:hover
+{
+    border: 1% ;
+    border-color: #f8ea23;
+    border-style:solid;   
+    box-shadow: none;
+}
+input
+{
+    border: none;
+    outline: none;
+}
+.input
+{
+    border: 1px #666;
+    border-style: solid;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    border-radius: 20px;
+    padding: 1%;
+}
+.cards
+{
+    width: auto;
+    height: 80vh;
+    overflow-y: auto;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+.text-yellow
+{
+    color: #eab308;
+    font-weight: 800;
+    margin-top: 3%;
+}
+.text-grey
+{
+    color: #a39e9e;
+    font-weight: 200;
+}
+.menu
+{
+    margin-top: 2%;
+    margin-left: 4%;
+}
+.part2 .menu
+{
+    display: flex;
+    margin-top: 2%;
+    position: relative;
+}
+.part2 .menu .button2
+{
+    position: absolute;
+    right: 4%;
+    border: none;
+    border-radius: 3px;
+}
+.part2 .menu .button1
+{
+    position: absolute;
+    right: 19%;
+    color: #ef4444;
+    background-color: #fee2e2;
+    border: none;
+    border-radius: 3px;
+}
+.xbtn
+{
+    background-color: #fed7d7;
+    color: #fff;   
+    border: none;
+}
+.padding
+{
+    padding: 2%;
+}
+.bg-red
+{
+    background-color: red;
+}
+.card-img
+{
+    height: 80px;
+    width: 80px;
+    margin-left: 25%;
+}
+.order-img
+{
+    height: 80px;
+    width: 80px;
+}
+.item
+{
+    margin-top: 2%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+    line-height: 4;
+}
+.Order
+{
+    margin-top: 9%;
+    height: 294px;
+    overflow-y: auto;
+}
+.Order .item h4
+{
+    width: 130px;
+}
+.Order .item h3
+{
+    /* margin-top: 0; */
+    line-height: 3;
+}
+.btn
+{
+    height: 40px;
+    width: 40px;
+    margin-top: 2%;
+    border-radius: 10px;    
+    border: none;
+}
+.total
+{
+    box-shadow: 2px 10px 10px 2px lightgray;
+    width: 95%;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 8%;
+    padding: 2%;
+
+}
+.flex
+{
+    display: flex;
+    justify-content: space-between;
+}
+.pay
+{
+    box-shadow: 2px 10px 10px 2px lightgray;
+    width: 95%;
+    height: auto;
+    margin: auto;
+    border-radius: 10px;
+    margin-top: 5%;
+    position: relative;
+    padding: 2%;
+    
+}
+.cnlbtn
+{
+    position: absolute;
+    right: 5%;
+    bottom: 18%;
+    padding: 3%;
+    border-radius: 10px;
+    border: none;
+    font-size: large;
+}
+.paybtn
+{
+    font-size: large;
+    margin-left: 2%;
+    border: none;
+    background-color: #eab308;
+    color: #fff;
+    width: 95%;
+    height: 55px;
+    border-radius: 10px;
+    /* margin: auto; */
+    margin-top: 5%;
+
+}
+.select
+{
+    padding: 1%;
+    background-color: #eab308;
+    border-radius: 20px;
+    color: #fff;
+}
