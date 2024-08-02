@@ -11,14 +11,14 @@ body
     margin: auto;
     /* margin-top: 2%; */
 }
-.part1
+.left
 {
     width: 60%;
     height: 100vh;
     float: left;
     position: relative;
 }
-.part2
+.right
 {
     box-shadow: 2px 0px 5px #666 inset;
     width: 40%;
@@ -103,20 +103,20 @@ input
     margin-top: 2%;
     margin-left: 4%;
 }
-.part2 .menu
+.right .menu
 {
     display: flex;
     margin-top: 2%;
     position: relative;
 }
-.part2 .menu .button2
+.right .menu .button2
 {
     position: absolute;
     right: 4%;
     border: none;
     border-radius: 3px;
 }
-.part2 .menu .button1
+.right .menu .button1
 {
     position: absolute;
     right: 19%;
