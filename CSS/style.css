@@ -20,7 +20,7 @@ body
 }
 .right
 {
-    box-shadow: 2px 0px 5px #666 inset;
+    box-shadow: 2px 0px 5px #d1cece inset;
     width: 40%;
     float: right;
 }
@@ -81,7 +81,7 @@ input
     height: 80vh;
     overflow-y: auto;
     display: flex;
-    gap: 30px;
+    gap: 20px;
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-left: 5%;
@@ -98,15 +98,11 @@ input
     color: #a39e9e;
     font-weight: 200;
 }
-.menu
-{
-    margin-top: 2%;
-    margin-left: 4%;
-}
 .right .menu
 {
+    margin-left: 4%;
     display: flex;
-    margin-top: 2%;
+    margin-top: 5%;
     position: relative;
 }
 .right .menu .button2
@@ -115,15 +111,19 @@ input
     right: 4%;
     border: none;
     border-radius: 3px;
+    font-size: medium;
+    font-weight:600px;
 }
 .right .menu .button1
 {
     position: absolute;
-    right: 19%;
+    right: 20%;
+    font: weight 600px;
     color: #ef4444;
     background-color: #fee2e2;
     border: none;
     border-radius: 3px;
+    font-size: medium;
 }
 .xbtn
 {
@@ -152,7 +152,7 @@ input
 }
 .item
 {
-    margin-top: 2%;
+    /* margin-top: 2%; */
     display: flex;
     justify-content: space-between;
     padding: 2%;
@@ -187,14 +187,18 @@ input
     width: 95%;
     margin: auto;
     border-radius: 10px;
-    margin-top: 8%;
-    padding: 2%;
-
+    margin-top: 2%;
+    padding: 4%;
+}
+.total span
+{
+    font-size: large;
 }
 .flex
 {
     display: flex;
     justify-content: space-between;
+    padding: 1%;
 }
 .pay
 {
@@ -233,6 +237,13 @@ input
 
 }
 .select
+{
+    padding: 1%;
+    background-color: #eab308;
+    border-radius: 20px;
+    color: #fff;
+}
+li:hover
 {
     padding: 1%;
     background-color: #eab308;
