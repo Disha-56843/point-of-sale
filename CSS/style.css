@@ -20,7 +20,7 @@ body {
     height: auto;
     margin: auto;
     /* margin-top: 2%; */
-    background-color: rgb(229 231 235);      
+    background-color: rgb(242, 243, 244);      
     /* background-color: #ffffff !important; */
 }
 
@@ -30,10 +30,11 @@ body {
     background-color: #ffffff;
     margin-left: auto;
     margin-right: auto;
-    width: 95%;
+    width: 97%;
     max-width: 1280px;
     height: 100vh;
     box-shadow: 2px 0px 5px #d1cece outset;
+    border-radius: 5px;
 }
 
 .left {
@@ -41,15 +42,12 @@ body {
     height: 100vh;
     float: left;
     position: relative;
-    /* background-color: #ffffff; */
 }
 
 .right {
-    /* box-shadow: 2px 0px 5px #d1cece inset; */
     width: 40%;
     height: 100% !important;
     float: right;
-    /* background-color: #ffffff; */
 }
 
 .head {
@@ -77,18 +75,20 @@ li {
 .card {
     border-radius: 15px;
     width: 28%;
-    height: 25vh;
+    height: 24vh;
     padding: 1%;
-    border: 1%;
+    border: 1px;
+    border-color: #666666;
     border-style: solid;
-    border-color: #666;
+    border-radius: 10px;
 }
 
 .card:hover {
-    border: 1%;
-    border-color: #f8ea23;
+    border: 1px;
+    border-color: #eab308 ;
     border-style: solid;
     box-shadow: none;
+    border-radius: 10px;
 }
 
 input {
@@ -111,7 +111,7 @@ input {
     height: 80vh;
     overflow-y: auto;
     display: flex;
-    gap: 13px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-left: auto;
@@ -279,4 +279,8 @@ li:hover {
     background-color: #eab308;
     border-radius: 20px;
     color: #fff;
+}
+hr {
+    border-style: inset;
+    border-width: 1px;
 }
