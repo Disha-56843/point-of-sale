@@ -18,9 +18,10 @@ html {
 body {
     width: 100%;
     height: auto;
+    /* overflow-y:unset; */
     margin: auto;
     /* margin-top: 2%; */
-    background-color: rgb(242, 243, 244);      
+    background-color: rgb(242, 243, 244);
     /* background-color: #ffffff !important; */
 }
 
@@ -32,7 +33,7 @@ body {
     margin-right: auto;
     width: 97%;
     max-width: 1280px;
-    height: 100vh;
+    height: 710px;
     box-shadow: 2px 0px 5px #d1cece outset;
     border-radius: 5px;
 }
@@ -86,7 +87,7 @@ li {
 
 .card:hover {
     border: 1px;
-    border-color: #eab308 ;
+    border-color: #eab308;
     border-style: solid;
     box-shadow: none;
     border-radius: 10px;
@@ -281,7 +282,16 @@ li:hover {
     border-radius: 20px;
     color: #fff;
 }
+
 hr {
     border-style: inset;
     border-width: 1px;
+}
+
+.no-data {
+    display: none;
+    font-size: xx-large;
+    margin: auto;
+    height: 500px;
+    margin-top: 200px;
 }
