@@ -1,23 +1,15 @@
-const input = document.getElementById("input");
-const cards = document.querySelectorAll(".card");
+const cards = document.querySelectorAll('.card')
 
-input.addEventListener("input", () => {
+input.addEventListener('input', (event) => {
+    cards.forEach((card) => {
+        const name = card.querySelector('h3').innerText
+        const price = card.querySelector('#price').innerText
 
-    const input_value = input.value;
+        if (name.includes(event.target.value) || price.includes(event.target.value)) {
+            card.style.display = 'block'
 
-    cards.forEach(card => {
-
-      const name = card.querySelector("h3").innerText;
-      const price = card.querySelector("#price").innerText;
-
-      if(name.includes(input_value) || price.includes(input_value))
-      {
-        card.style.display = ""; 
-      }
-      else
-      {
-        card.style.display = "none";
-      }
-    });
-
+            return
+        }
+        card.style.display = 'none'
+    })
 })
