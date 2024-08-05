@@ -295,3 +295,12 @@ hr {
     height: 500px;
     margin-top: 200px;
 }
+
+.cashless {
+    font-size: large;
+    font-weight: 500;
+}
+
+.font-size-larger {
+    font-size: larger;
+}
