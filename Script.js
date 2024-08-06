@@ -3,7 +3,11 @@ const cards = document.querySelectorAll('.card')
 const nodata = document.querySelector('.no-data')
 nodata.style.display = 'none'
 
+input.value = localStorage.getItem('input-value') ?? ''
+
 input.addEventListener('input', (event) => {
+    localStorage.setItem('input-value', event.target.value)
+
     cards.forEach((card) => {
         const name = card.querySelector('h3').innerText
         const price = card.querySelector('#price').innerText
@@ -16,11 +20,8 @@ input.addEventListener('input', (event) => {
         }
         if (card.style.display == 'none') {
             nodata.style.display = 'block'
-            nodata.innerHTML = 'No Result Found'
-
         }
+
         card.style.display = 'none'
-
-
     })
 })
