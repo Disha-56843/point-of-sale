@@ -1,27 +1,47 @@
-const cards = document.querySelectorAll('.card')
-
+const product = document.querySelectorAll('.card')
 const nodata = document.querySelector('.no-data')
 nodata.style.display = 'none'
 
+const input = document.querySelector('#input')
 input.value = localStorage.getItem('input-value') ?? ''
 
-input.addEventListener('input', (event) => {
-    localStorage.setItem('input-value', event.target.value)
+function searchProducts(searchValue) {
 
-    cards.forEach((card) => {
-        const name = card.querySelector('h3').innerText
+    let visibleProducts = false
+
+    product.forEach((card) => {
+        const pname = card.querySelector('.item-name').innerText
         const price = card.querySelector('#price').innerText
 
-        if (name.includes(event.target.value) || price.includes(event.target.value)) {
+        if (pname.includes(searchValue) || price.includes(searchValue)) {
             card.style.display = 'block'
-            nodata.style.display = 'none'
-
+            visibleProducts = true
+           
             return
-        }
-        if (card.style.display == 'none') {
-            nodata.style.display = 'block'
         }
 
         card.style.display = 'none'
     })
+
+    if (!visibleProducts) {
+        nodata.style.display = 'block'
+       
+
+        return
+    }
+
+    nodata.style.display = 'none'
+
+}
+
+searchProducts(input.value)
+
+input.addEventListener('input', (event) => {
+
+    const searchValue = event.target.value
+    localStorage.setItem('input-value', event.target.value)
+
+
+    searchProducts(searchValue)
 })
+

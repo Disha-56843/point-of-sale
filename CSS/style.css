@@ -289,7 +289,7 @@ hr {
 }
 
 .no-data {
-    display: none;
+    display:none;
     font-size: xx-large;
     margin: auto;
     height: 500px;
