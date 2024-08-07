@@ -19,63 +19,63 @@
                 </span>
 
             </div>
-            <ol>
-                <li class="select">All items</li>
-                <li>Men's Shirt</li>
-                <li>Women's Shirt</li>
-                <li>Men's Jeans</li>
-                <li>Women's Jeans</li>
+            <ol id="category-list">
+                <li class="select" onclick="sortProducts('all', this)">All items</li>
+                <li onclick="sortProducts('Men Shirt', this)">Men's Shirt</li>
+                <li onclick="sortProducts('Women Shirt', this)">Women's Shirt</li>
+                <li onclick="sortProducts('Men Jeans', this)">Men's Jeans</li>
+                <li onclick="sortProducts('Women Jeans', this)">Women's Jeans</li>
             </ol>
             <div class="cards">
-                <div class="card">
+                <div class="card" data-category="Men Shirt">
                     <h3>STONEBERG</h3>
                     <span class="text-grey">Men Formal Shirt</span><br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img1.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Men Shirt">
                     <h3>FIBERMILL</h3>
                     <span class="text-grey">Men Printed Shirt</span><br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img2.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Women Shirt">
                     <h3>CHEMISTRY</h3>
                     <span class="text-grey">Women Casual Shirt</span> <br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img3.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Women Shirt">
                     <h3>J TURRITOPSIS</h3>
                     <span class="text-grey">Women Retro Shirts</span> <br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img4.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Women Shirt">
                     <h3>zenesty</h3>
                     <span class="text-grey">Women Casual Shirt</span> <br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img5.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Men Jeans">
                     <h3>Spykar</h3>
                     <span class="text-grey">Men Skinny Fit Jeans</span> <br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img6.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Men Jeans">
                     <h3>JACK & JONES</h3>
                     <span class="text-grey">Men Skinny Fit Jeans </span> <br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img7.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Women Jeans">
                     <h3>TYFFYN</h3>
                     <span class="text-grey">Women Black Jeans</span><br><br>
                     <span class="text-yellow">$1.75</span>
                     <img src="./Image/img8.jpg" alt="" class="card-img">
                 </div>
-                <div class="card">
+                <div class="card" data-category="Women Jeans">
                     <h3>Miss Chase </h3>
                     <span class="text-grey">Women Black Jeans</span><br><br>
                     <span class="text-yellow">$1.75</span>
@@ -192,6 +192,8 @@
 
         </div>
     </div>
+
+    <script src="./script.js"></script>
 </body>
 
 </html>
