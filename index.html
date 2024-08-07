@@ -15,7 +15,7 @@
                 <h2 class="head">Disha's Team</h2>
                 <p>Location ID#SIMON123</p>
                 <span class="input">
-                    <input type="text">
+                    <input placeholder="Search Products" type="text" id="input">
                 </span>
 
             </div>
@@ -27,58 +27,59 @@
                 <li onclick="sortProducts('Women Jeans', this)">Women's Jeans</li>
             </ol>
             <div class="cards">
-                <div class="card" data-category="Men Shirt">
-                    <h3>STONEBERG</h3>
+                <h1 class="no-data">No Data Found</h1>
+                <div class="card">
+                    <h3 class="item-name">STONEBERG</h3>
                     <span class="text-grey">Men Formal Shirt</span><br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$1.75</span>
                     <img src="./Image/img1.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Men Shirt">
-                    <h3>FIBERMILL</h3>
+                <div class="card">
+                    <h3 class="item-name">FIBERMILL</h3>
                     <span class="text-grey">Men Printed Shirt</span><br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$12.75</span>
                     <img src="./Image/img2.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Women Shirt">
-                    <h3>CHEMISTRY</h3>
+                <div class="card">
+                    <h3 class="item-name">CHEMISTRY</h3>
                     <span class="text-grey">Women Casual Shirt</span> <br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$11.75</span>
                     <img src="./Image/img3.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Women Shirt">
-                    <h3>J TURRITOPSIS</h3>
+                <div class="card">
+                    <h3 class="item-name">J TURRITOPSIS</h3>
                     <span class="text-grey">Women Retro Shirts</span> <br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$13.75</span>
                     <img src="./Image/img4.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Women Shirt">
-                    <h3>zenesty</h3>
+                <div class="card">
+                    <h3 class="item-name">zenesty</h3>
                     <span class="text-grey">Women Casual Shirt</span> <br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$11.25</span>
                     <img src="./Image/img5.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Men Jeans">
-                    <h3>Spykar</h3>
+                <div class="card">
+                    <h3 class="item-name">Spykar</h3>
                     <span class="text-grey">Men Skinny Fit Jeans</span> <br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$10.75</span>
                     <img src="./Image/img6.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Men Jeans">
-                    <h3>JACK & JONES</h3>
+                <div class="card">
+                    <h3 class="item-name">JACK & JONES</h3>
                     <span class="text-grey">Men Skinny Fit Jeans </span> <br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$11.50</span>
                     <img src="./Image/img7.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Women Jeans">
-                    <h3>TYFFYN</h3>
+                <div class="card">
+                    <h3 class="item-name">TYFFYN</h3>
                     <span class="text-grey">Women Black Jeans</span><br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$18.75</span>
                     <img src="./Image/img8.jpg" alt="" class="card-img">
                 </div>
-                <div class="card" data-category="Women Jeans">
-                    <h3>Miss Chase </h3>
+                <div class="card">
+                    <h3 class="item-name">Miss Chase </h3>
                     <span class="text-grey">Women Black Jeans</span><br><br>
-                    <span class="text-yellow">$1.75</span>
+                    <span class="text-yellow" id="price">$16.75</span>
                     <img src="./Image/img9.jpg" alt="" class="card-img">
                 </div>
 
@@ -99,62 +100,32 @@
 
                 <div class="item item1">
 
-                    <img src="./Image/img2.jpg" alt="" class="order-img">
-                    <h4>Men's Shirt</h4>
-                    <button class="btn">+</button>
-                    <span>&nbsp;2</span>
-                    <button class="btn">-</button>
-                    <h3 class="line-hight">$13.50</h3>
+
 
                 </div>
                 <div class="item item2">
 
-                    <img src="./Image/img3.jpg" alt="" class="order-img">
-                    <h4>Women's Shirt</h4>
-                    <button class="btn">+</button>
-                    <span>10</span>
-                    <button class="btn">-</button>
-                    <h3>&nbsp;$3.50</h3>
+
 
                 </div>
                 <div class="item item3">
 
-                    <img src="./Image/img7.jpg" alt="" class="order-img">
-                    <h4>Men's Jeans</h4>
-                    <button class="btn">+</button>
-                    <span>10</span>
-                    <button class="btn">-</button>
-                    <h3>&nbsp;$3.50</h3>
+
 
                 </div>
                 <div class="item item4">
 
-                    <img src="./Image/img4.jpg" alt="" class="order-img">
-                    <h4>Women's Shirt</h4>
-                    <button class="btn">+</button>
-                    <span>10</span>
-                    <button class="btn">-</button>
-                    <h3>&nbsp;$3.50</h3>
+
 
                 </div>
                 <div class="item item5">
 
-                    <img src="./Image/img6.jpg" alt="" class="order-img">
-                    <h4>Men's Jeans</h4>
-                    <button class="btn">+</button>
-                    <span>&nbsp;1</span>
-                    <button class="btn">-</button>
-                    <h3>&nbsp;$2.50</h3>
+
 
                 </div>
                 <div class="item item6">
 
-                    <img src="./Image/img8.jpg" alt="" class="order-img">
-                    <h4>Women's Jeans</h4>
-                    <button class="btn">+</button>
-                    <span>&nbsp;1</span>
-                    <button class="btn">-</button>
-                    <h3>&nbsp;$2.50</h3>
+
 
                 </div>
 
@@ -170,7 +141,7 @@
                     <h3>- $5.00</h3>
                 </div>
                 <div class="flex">
-                    <hspan4>Sales Tax</hspan4>
+                    <span>Sales Tax</span>
                     <h3>$2.25</h3>
                 </div>
                 <hr>
@@ -181,8 +152,8 @@
             </div>
             <div class="pay">
 
-                <span style="font-size: larg; font-weight: 500;"><b>cashless credit</b></span><br>
-                <span class="text-yellow" style="font-size: larger;">$32.50</span><br>
+                <span class="cashless"><b>cashless credit</b></span><br>
+                <span class="text-yellow font-size-larger">$32.50</span><br>
                 <span>Available</span>
                 <button class="cancle-button">Cancel</button>
 
@@ -193,6 +164,10 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> f09deffd100ff22665def418660547624037f412
     <script src="./script.js"></script>
 </body>
 
