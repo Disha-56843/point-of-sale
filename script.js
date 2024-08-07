@@ -48,7 +48,7 @@ input.addEventListener('input', (event) => {
 })
 
 
-function sortProducts(category , element) {
+function sortProducts(category) {
 
     localStorage.setItem('selectedCategory', category);
 
