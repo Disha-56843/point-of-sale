@@ -33,11 +33,7 @@ body {
     margin-right: auto;
     width: 97%;
     max-width: 1280px;
-<<<<<<< HEAD:css/style.css
     height: 710px;
-=======
-    height: 720px;
->>>>>>> f09deffd100ff22665def418660547624037f412:CSS/style.css
     box-shadow: 2px 0px 5px #d1cece outset;
     border-radius: 5px;
 }
@@ -291,7 +287,6 @@ hr {
     border-style: inset;
     border-width: 1px;
 }
-<<<<<<< HEAD:css/style.css
 
 .no-data {
     display:none;
@@ -309,15 +304,3 @@ hr {
 .font-size-larger {
     font-size: larger;
 }
-=======
-#category-list li {
-    cursor: pointer;
-}
-
-.active-category {
-    padding: 1%;
-    background-color: #eab308;
-    border-radius: 20px;
-    color: #fff;
-}
->>>>>>> f09deffd100ff22665def418660547624037f412:CSS/style.css
