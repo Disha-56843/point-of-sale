@@ -17,6 +17,7 @@ function searchProducts(searchValue) {
             card.style.display = 'block'
             visibleProducts = true
            
+
             return
         }
 
@@ -26,6 +27,7 @@ function searchProducts(searchValue) {
     if (!visibleProducts) {
         nodata.style.display = 'block'
        
+
 
         return
     }
