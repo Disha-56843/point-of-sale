@@ -20,7 +20,7 @@ body {
     height: auto;
     margin: auto;
     /* margin-top: 2%; */
-    background-color: rgb(242, 243, 244);      
+    background-color: rgb(242, 243, 244);
     /* background-color: #ffffff !important; */
 }
 
@@ -37,7 +37,7 @@ body {
     border-radius: 5px;
 }
 
-.left {
+.leftContainer {
     width: 60%;
     height: 100vh;
     float: left;
@@ -61,21 +61,29 @@ p {
     font-size: small;
 }
 
-ol {
+ul {
     list-style: none;
     margin-top: 3%;
     margin-left: 4%;
 }
 
-li {
+ul li {
     display: inline;
     margin: 0 2% 0 0;
+    background-color: transparent;
+}
+
+ul li button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .card {
     border-radius: 15px;
     width: 28%;
-    height: 24vh;
+    height: 22vh;
     padding: 1%;
     border: 1px;
     border-color: #666666;
@@ -85,7 +93,7 @@ li {
 
 .card:hover {
     border: 1px;
-    border-color: #eab308 ;
+    border-color: #eab308;
     border-style: solid;
     box-shadow: none;
     border-radius: 10px;
@@ -189,17 +197,17 @@ input {
     line-height: 3;
 }
 
-.Order {
+.order {
     margin-top: 5%;
     height: 264px;
     overflow-y: auto;
 }
 
-.Order .item h4 {
+.order .item h4 {
     width: 130px;
 }
 
-.Order .item h3 {
+.order .item h3 {
     /* margin-top: 0; */
     line-height: 3;
 }
@@ -269,21 +277,52 @@ input {
 
 .select {
     padding: 1%;
-    background-color: #eab308;
+    background-color: #eab308 !important;
     border-radius: 20px;
     color: #fff;
+    cursor: pointer;
 }
 
-li:hover {
+ul li:hover {
     padding: 1%;
     background-color: #eab308;
     border-radius: 20px;
     color: #fff;
+    cursor: pointer;
 }
+
+.cashless {
+    font-size: large;
+    font-weight: 500;
+}
+
+.font-size-larger {
+    font-size: larger;
+}
+
 hr {
     border-style: inset;
     border-width: 1px;
 }
+
+.no-data {
+    display: none;
+    font-size: xx-large;
+    margin: auto;
+    height: 300px;
+    margin-top: 200px;
+    margin-left: 200px;
+}
+
+.cashless {
+    font-size: large;
+    font-weight: 500;
+}
+
+.font-size-larger {
+    font-size: larger;
+}
+
 #category-list li {
     cursor: pointer;
 }
