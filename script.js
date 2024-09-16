@@ -237,89 +237,88 @@ function addToCart(product) {
     const cartItemContainer = document.querySelector('.order-container')
 
     const existingProduct = cart.find(existingProductInCart => existingProductInCart.id === product.id)
+    const orderContainer = document.querySelector(`.orders-${product.id}`)
 
-    if (existingProduct) {
-        if (existingProduct.quantity < product.quantity_limit) {
-            existingProduct.quantity++
+    if (existingProduct && existingProduct.quantity < product.quantity_limit) {
+        orderContainer.querySelector('.quantity').innerHTML = ++existingProduct.quantity
+        existingProduct.price = product.price * existingProduct.quantity
 
-            const allOrderItems = cartItemContainer.querySelectorAll(`.orders-${product.id}`)
-            allOrderItems.forEach(orderContainer => {
-                const productInCart = cart.find(cartItem => cartItem.id === product.id)
-                if (productInCart) {
-                    // const orderContainer = productInCart.container
-                    orderContainer.querySelector('.quantity').innerText = existingProduct.quantity
-                    orderContainer.querySelector('.ordered-product-price').innerHTML = `$${(
-                        parseFloat(product.price) * existingProduct.quantity
-                    ).toFixed(2)}`
-                }
-            })
-        }
+        updateCart()
+        updateProductAvailability()
+    }
 
-
-        // updateProductAvailability()
-    } else {
+    else {
 
         cart.push({ ...product, quantity: 1 })
 
         // const cartProduct = cart.find(cartItem => cartItem.id === product.id)
         // cart.forEach(product => {
 
+        cartItemContainer.innerHTML = ''
+        cart.forEach(cartProducts => {
 
-        cartItemContainer.innerHTML +=
-            `<div class="orders orders-${cart.id}">
-                <img src="${product.image}" alt="${product.name}" style="height: 60px; width: 75px; border-radius: 5px;" />
-                <h4 class="ordered-product-name">${product.name}</h4>
-                <button class="decrement">-</button>
-                <span class="quantity">1</span>
-                <button class="increment">+</button>
-                <span class="ordered-product-price">$${product.price}</span>
-                <button class="cancel-product">x</button>
-            </div>`
-
-        const orderContainer = cartItemContainer.querySelectorAll(`.orders-${cart.id}`)
-
-        // const cartProduct = cart.find(cartItem => cartItem.id === product.id)
-
-
-        orderContainer.forEach(cartProducts => {
+            cartItemContainer.innerHTML +=
+                `<div class="orders orders-${cartProducts.id}">
+                    <img src="${cartProducts.image}" alt="${cartProducts.name}" style="height: 60px; width: 75px; border-radius: 5px;" />
+                    <h4 class="ordered-product-name">${cartProducts.name}</h4>
+                    <button class="decrement">-</button>
+                    <span class="quantity">${cartProducts.quantity}</span>
+                    <button class="increment">+</button>
+                    <span class="ordered-product-price">$${cartProducts.price}</span>
+                    <button class="cancel-product">x</button>
+                </div>`
 
 
 
-            cartProducts.querySelector('.decrement').addEventListener('click', function () {
-                const cartProduct = cart.find(cartItem => cartItem.id === orderContainer)
+            const orderContainer = document.querySelector(`.orders-${cartProducts.id}`)
+
+            // const cartProduct = cart.find(cartItem => cartItem.id === product.id)          
+            // orderContainer.forEach(cartProducts => {
+
+
+
+            orderContainer.querySelector('.decrement').addEventListener('click', function () {
+                const cartProduct = cart.find(cartItem => cartItem.id === product.id)
 
                 if (cartProduct && cartProduct.quantity > 1) {
-                    console.log(cartProduct.quantity)
-                    orderContainer.quantity--
-                    cartProducts.querySelector('.quantity').innerHTML = cartProduct.quantity
-                    cartProducts.querySelector('.ordered-product-price').innerHTML = `$${(
-                        parseFloat(product.price) * cartProduct.quantity
+                    orderContainer.querySelector('.quantity').innerHTML = --cartProducts.quantity;
+
+                    console.log(cartProducts.quantity)
+                    orderContainer.querySelector('.ordered-product-price').innerHTML = `$${(
+                        parseFloat(cartProducts.price) * cartProducts.quantity
                     ).toFixed(2)}`
 
                     updateCart()
                     updateProductAvailability()
-                } else if (cartItemContainer.children.length === 1) {
-                    if (confirm('Do you want to remove this item from the cart?')) {
-                        cart.splice(cart.findIndex(cartItem => cartItem.id === orderContainer), 1)
+                } else {
+                    if (cartProduct && cartProduct.quantity === 1) {
+                        if (confirm('Do you want to remove this item from the cart?')) {
+                            cart.splice(cart.findIndex(cartItem => cartItem.id === product.id), 1)
 
-                        cartProducts.remove()
-                        cartProducts.remove()
-                        updateCart()
-                        updateProductAvailability()
+                            // cartProduct.remove()
+                            orderContainer.remove()
+                            updateCart()
+                            updateProductAvailability()
+
+                            return
+                        }
+
+                        return
                     }
+                    cartProducts.remove()
                 }
             }
             )
 
-            cartProducts.querySelector('.increment').addEventListener('click', function () {
-                const cartProduct = cart.find(cartItem => cartItem.id === orderContainer)
+            orderContainer.querySelector('.increment').addEventListener('click', function () {
+                const cartProduct = cart.find(cartItem => cartItem.id === product.id)
                 const quantityLimit = product.quantity_limit
 
-                if (cartProduct && cartProduct.quantity < quantityLimit) {
-                    cartProduct.quantity++
-                    cartProducts.querySelector('.quantity').innerHTML = cartProduct.quantity
-                    cartProducts.querySelector('.ordered-product-price').innerHTML = `$${(
-                        parseFloat(product.price) * cartProduct.quantity
+                if (cartProducts && cartProducts.quantity < quantityLimit) {
+                    orderContainer.querySelector('.quantity').innerHTML = ++cartProducts.quantity;
+
+                    orderContainer.querySelector('.ordered-product-price').innerHTML = `$${(
+                        parseFloat(cartProducts.price) * cartProducts.quantity
                     ).toFixed(2)}`
 
                     updateCart()
@@ -330,12 +329,12 @@ function addToCart(product) {
             })
 
 
-            cartProducts.querySelector('.cancel-product').addEventListener('click', function () {
-                cart.splice(cart.findIndex(cartItem => cartItem.id === orderContainer), 1)
+            orderContainer.querySelector('.cancel-product').addEventListener('click', function () {
+                cart.splice(cart.findIndex(cartItem => cartItem.id === product.id), 1)
 
-                cartProducts.remove()
-                cartProducts.remove()
 
+                // cartProducts.remove()
+                orderContainer.remove()
                 updateCart()
                 updateProductAvailability()
 
