@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Shopping Cart</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" 
+    />
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="left-container">
+            <div class="left-container-header">
+                <div>
+                        <h2 class="head">Disha's Team </h2>
+
+                        <p>Location ID#SIMON123</p>
+                </div>
+                <input
+                    id="search-product"
+                    class="input"
+                    type="text"
+                    placeholder="Search by product    Ctrl+K"
+                >
+            </div>
+
+            <ul id="category-list">
+                <li
+                    class="list-items select"
+                    onclick="updateCategoryUI('all')"
+                >
+                    All items
+                </li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Men Shirt')"
+                >
+                    Men Shirt
+                </li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Women Shirt')"
+                >
+                    Women Shirt
+                </li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Men Jeans')"
+                >
+                    Men Jeans
+                </li>
+                <li
+                    class="list-items"
+                    onclick="updateCategoryUI('Women Jeans')"
+                >
+                    Women Jeans
+                </li>
+
+                <li class="sort-product-list">
+                    <select 
+                        class="sort-product"
+                    >
+                        <option
+                            value="select"
+                        >
+                            Select
+                        </option>
+                        <option 
+                            value="Sort by: name"
+                        >
+                            Sort by: name
+                        </option>
+                        <option 
+                            value="Sort by: price"
+                        >
+                            Sort by: price
+                        </option>
+                        
+                    </select>
+                    <span class="js-sort-icon sort-button"></span>
+                </li>
+            </ul>
+                
+            <h1 class="no-data">No Data Found</h1>
+            <div class="cards products-container">
+                <!-- Insert the product via js` -->
+            </div>
+
+        </div>
+
+        <div class="right-container">
+
+            <div class="menu">
+
+                <h2>Current Order</h2>
+                <button
+                    class="bg-red button1 padding"
+                    id="clear-all-button"
+                >
+                    Clear All
+                </button>
+                <button class="button2 padding">Setting</button>
+
+            </div>
+
+            <div class="order-container">
+                <!-- Insert the product in cart via js` -->
+            </div>
+
+            <div class="total">
+                <div class="flex">
+                    <span>Subtotal</span>
+                    <h3 class="js-subtotal">$0.00</h3>
+                </div>
+                <div class="flex">
+                    <span>Discount(5%)</span>
+                    <h3 class="js-discount">- $0.00</h3>
+                </div>
+                <div class="flex">
+                    <span>Sales Tax(18%)</span>
+                    <h3 class="js-sales-tax">$0.00</h3>
+                </div>
+                <hr>
+                <div class="flex">
+                    <h2>Total</h2>
+                    <h2 class="js-total-of-product">$0.00</h2>
+                </div>
+            </div>
+
+            <button class="paybtn">Pay With Cashless Credit</button>
+
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
