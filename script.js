@@ -234,14 +234,12 @@ function updateCategoryUI(category) {
 
 
 function addToCart(product) {
-    const cartItemContainer = document.querySelector('.order-container')
 
     const existingProduct = cart.find(existingProductInCart => existingProductInCart.id === product.id)
-    const orderContainer = document.querySelector(`.orders-${product.id}`)
+    const purchasedProductContainer = document.querySelector(`.orders-${product.id}`)
 
     if (existingProduct && existingProduct.quantity < product.quantity_limit) {
-        orderContainer.querySelector('.quantity').innerHTML = ++existingProduct.quantity
-        existingProduct.price = product.price * existingProduct.quantity
+        purchasedProductContainer.querySelector('.quantity').innerHTML = ++existingProduct.quantity
 
         updateCart()
         updateProductAvailability()
@@ -251,92 +249,97 @@ function addToCart(product) {
 
         cart.push({ ...product, quantity: 1 })
 
-        cartItemContainer.innerHTML = ''
-        cart.forEach(cartProducts => {
+    }
 
-            cartItemContainer.innerHTML +=
-                `<div class="orders orders-${cartProducts.id}">
-                    <img src="${cartProducts.image}" alt="${cartProducts.name}" style="height: 60px; width: 75px; border-radius: 5px;" />
-                    <h4 class="ordered-product-name">${cartProducts.name}</h4>
-                    <button class="decrement">-</button>
-                    <span class="quantity">${cartProducts.quantity}</span>
-                    <button class="increment">+</button>
-                    <span class="ordered-product-price">$${cartProducts.price}</span>
-                    <button class="cancel-product">x</button>
-                </div>`
+    renderCart()
+    updateCart()
+    updateProductAvailability()
+}
 
+function renderCart() {
 
+    const cartItemContainer = document.querySelector('.order-container')
 
-            const orderContainer = document.querySelector(`.orders-${cartProducts.id}`)
+    cartItemContainer.innerHTML = ''
+    cart.forEach(cartProduct => {
 
-            orderContainer.querySelector('.decrement').addEventListener('click', function () {
-                const cartProduct = cart.find(cartItem => cartItem.id === product.id)
+        cartItemContainer.innerHTML +=
+            `<div class="orders orders-${cartProduct.id}">
+                <img src="${cartProduct.image}" alt="${cartProduct.name}" style="height: 60px; width: 75px; border-radius: 5px;" />
+                <h4 class="ordered-product-name">${cartProduct.name}</h4>
+                <button class="decrement">-</button>
+                <span class="quantity">${cartProduct.quantity}</span>
+                <button class="increment">+</button>
+                <span class="ordered-product-price">$${cartProduct.price * cartProduct.quantity}</span>
+                <button class="remove-product">x</button>
+            </div>`
 
-                if (cartProduct && cartProduct.quantity > 1) {
-                    orderContainer.querySelector('.quantity').innerHTML = --cartProducts.quantity;
+    })
 
-                    console.log(cartProducts.quantity)
-                    orderContainer.querySelector('.ordered-product-price').innerHTML = `$${(
-                        parseFloat(cartProducts.price) * cartProducts.quantity
-                    ).toFixed(2)}`
+    addToCartEventHandlers()
 
-                    updateCart()
-                    updateProductAvailability()
-                } else {
-                    if (cartProduct && cartProduct.quantity === 1) {
-                        if (confirm('Do you want to remove this item from the cart?')) {
-                            cart.splice(cart.findIndex(cartItem => cartItem.id === product.id), 1)
+}
 
-                            orderContainer.remove()
-                            updateCart()
-                            updateProductAvailability()
+function addToCartEventHandlers() {
 
-                            return
-                        }
+    cart.forEach(cartProduct => {
+
+        const purchasedProductContainer = document.querySelector(`.orders-${cartProduct.id}`)
+
+        purchasedProductContainer.querySelector('.decrement').addEventListener('click', function () {
+
+            if (cartProduct.quantity > 1) {
+                purchasedProductContainer.querySelector('.quantity').innerHTML = --cartProduct.quantity
+
+                renderCart()
+                updateCart()
+                updateProductAvailability()
+            } else {
+                if (cartProduct.quantity === 1) {
+                    if (confirm('Do you want to remove this item from the cart?')) {
+                        cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
+
+                        purchasedProductContainer.remove()
+                        renderCart()
+                        updateCart()
+                        updateProductAvailability()
 
                         return
                     }
-                    cartProducts.remove()
+
+                    return
                 }
+                purchasedProductContainer.remove()
             }
-            )
+        })
 
-            orderContainer.querySelector('.increment').addEventListener('click', function () {
-                const cartProduct = cart.find(cartItem => cartItem.id === product.id)
-                const quantityLimit = product.quantity_limit
+        purchasedProductContainer.querySelector('.increment').addEventListener('click', function () {
+            const quantityLimit = cartProduct.quantity_limit
 
-                if (cartProducts && cartProducts.quantity < quantityLimit) {
-                    orderContainer.querySelector('.quantity').innerHTML = ++cartProducts.quantity;
+            if (cartProduct.quantity < quantityLimit) {
+                purchasedProductContainer.querySelector('.quantity').innerHTML = ++cartProduct.quantity;
 
-                    orderContainer.querySelector('.ordered-product-price').innerHTML = `$${(
-                        parseFloat(cartProducts.price) * cartProducts.quantity
-                    ).toFixed(2)}`
-
-                    updateCart()
-                    updateProductAvailability()
-                } else {
-                    alert('Cannot add more of this product to the cart. Quantity limit reached.')
-                }
-            })
-
-
-            orderContainer.querySelector('.cancel-product').addEventListener('click', function () {
-                cart.splice(cart.findIndex(cartItem => cartItem.id === product.id), 1)
-
-                orderContainer.remove()
+                renderCart()
                 updateCart()
                 updateProductAvailability()
+            } else {
+                alert('Cannot add more of this product to the cart. Quantity limit reached.')
+            }
+        })
 
-            })
 
+        purchasedProductContainer.querySelector('.remove-product').addEventListener('click', function () {
+            cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
+
+            purchasedProductContainer.remove()
+            renderCart()
+            updateCart()
+            updateProductAvailability()
 
         })
-    }
+    })
 
-    updateCart()
 }
-
-
 
 function updateCart() {
     const cartItemContainer = document.querySelector('.order-container')
@@ -524,8 +527,6 @@ function sortProductsByNameAndPrice(sortCriteria) {
             })
         })
 
-    } else {
-        console.warn('Unknown sort criteria:', sortCriteria)
     }
 
 
