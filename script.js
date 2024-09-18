@@ -406,64 +406,57 @@ showProducts()
 
 function sortProductsByNameAndPrice(sortCriteria) {
     const productContainer = document.querySelector('.products-container')
-    const productElements = Array.from(productContainer.querySelectorAll('.products'))
     const sortIconContainer = document.querySelector('.js-sort-icon')
+    const isOutOfStock = products.forEach((product) => product.isOutOfStock)
+    // const productElements = Array.from(productContainer.querySelectorAll('.products'))
+    // const isOutOfStock = document.querySelectorAll('.products').forEach((product) => {product.classList.contains('js-product-out-of-stock')})
 
     sortIconContainer.innerHTML = ''
 
-    if (sortCriteria === 'select') {     
+    if (sortCriteria === 'select') {
 
         updateProducts()
 
     } else if (sortCriteria === 'Sort by: name') {
-        const aToZSortIcon = document.createElement('button')
-        aToZSortIcon.classList.add('fa-solid', 'fa-arrows-up-down')
-        sortIconContainer.appendChild(aToZSortIcon)
 
-        aToZSortIcon.addEventListener('click', () => {
-            productElements.sort((productElement1, productElement2) => {
-                const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
-                const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
-                return productName1.localeCompare(productName2)
+        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="js-a-to-z-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
+
+        document.querySelector('.js-a-to-z-sort').addEventListener('click', () => {
+            products.sort((product1, product2) => {
+                // const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
+                // const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
+                return product1.name.toLowerCase().localeCompare(product2.name.toLowerCase)
             })
 
-            productElements.forEach(productElement => productContainer.appendChild(productElement))
+            productContainer.innerHTML = ''
+            products.forEach(product => {
+                const productElement = document.getElementById(product.id)
+                productContainer.appendChild(productElement)
+            })
 
 
-            aToZSortIcon.classList.remove('fa-solid', 'fa-arrows-up-down')
-            sortIconContainer.removeChild(aToZSortIcon)
+            sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-z-to-a-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
 
-            const zToASortIcon = document.createElement('button')
-            zToASortIcon.classList.add('fa-solid', 'fa-arrow-up')
-            sortIconContainer.appendChild(zToASortIcon)
-
-            zToASortIcon.addEventListener('click', () => {
-                productElements.sort((productElement1, productElement2) => {
-                    const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
-                    const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
-                    return productName2.localeCompare(productName1)
+            document.querySelector('.js-z-to-a-sort').addEventListener('click', () => {
+                products.sort((product1, product2) => {
+                    // const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
+                    // const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
+                    return product2.name.toLowerCase().localeCompare(product1.name.toLowerCase())
                 })
 
-                productElements.forEach(productElement => productContainer.appendChild(productElement))
+                productContainer.innerHTML = ''
+                products.forEach(product => {
+                    const productElement = document.getElementById(product.id)
+                    productContainer.appendChild(productElement)
+                })
 
 
-                zToASortIcon.classList.remove('fa-solid', 'fa-arrow-up')
-                sortIconContainer.removeChild(zToASortIcon)
+                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
 
-                const sortBackNormal = document.createElement('button')
-                sortBackNormal.classList.add('fa-solid', 'fa-arrow-down')
-                sortIconContainer.appendChild(sortBackNormal)
-
-                sortBackNormal.addEventListener('click', () => {
+                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
 
                     updateProducts()
-
-                    sortBackNormal.classList.remove('fa-solid', 'fa-arrow-down')
-                    sortIconContainer.removeChild(sortBackNormal)
-
-                    const resetsort = document.createElement('button')
-                    resetsort.classList.add('fa-solid', 'fa-arrows-up-down')
-                    sortIconContainer.appendChild(resetsort)
+                    sortProductsByNameAndPrice(sortCriteria)
 
                 })
             })
@@ -471,57 +464,45 @@ function sortProductsByNameAndPrice(sortCriteria) {
 
 
     } else if (sortCriteria === 'Sort by: price') {
-        const lowToHighpriceShortIcon = document.createElement('button')
-        lowToHighpriceShortIcon.classList.add('fa-solid', 'fa-arrows-up-down')
-        sortIconContainer.appendChild(lowToHighpriceShortIcon)
+        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="fa-solid fa-arrows-up-down js-low-to-high-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
 
-        lowToHighpriceShortIcon.addEventListener('click', () => {
-            productElements.sort((productElement1, productElement2) => {
-                const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
-                const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
-                return productPrice1 - productPrice2
+        document.querySelector('.js-low-to-high-sort').addEventListener('click', () => {
+            products.sort((product1, product2) => {
+                // const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
+                // const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
+                return product1.price - product2.price
+            })
+
+            productContainer.innerHTML = ''
+            products.forEach(product => {
+                const productElement = document.getElementById(product.id)
+                productContainer.appendChild(productElement)
             })
 
 
-            productElements.forEach(productElement => productContainer.appendChild(productElement))
+            sortIconContainer.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-high-to-low-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
 
+            document.querySelector('.js-high-to-low-sort').addEventListener('click', () => {
+                products.sort((product1, product2) => {
+                    // const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
+                    // const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
+                    return product2.price - product1.price
+                })
 
-            lowToHighpriceShortIcon.classList.remove('fa-solid', 'fa-arrows-up-down')
-            sortIconContainer.removeChild(lowToHighpriceShortIcon)
-
-            const highToLowPriceShortIcon = document.createElement('button')
-            highToLowPriceShortIcon.classList.add('fa-solid', 'fa-arrow-up')
-            sortIconContainer.appendChild(highToLowPriceShortIcon)
-
-            highToLowPriceShortIcon.addEventListener('click', () => {
-                productElements.sort((productElement1, productElement2) => {
-                    const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
-                    const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
-                    return productPrice2 - productPrice1
+                productContainer.innerHTML = ''
+                products.forEach(product => {
+                    const productElement = document.getElementById(product.id)
+                    productContainer.appendChild(productElement)
                 })
 
 
-                productElements.forEach(productElement => productContainer.appendChild(productElement))
+                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
 
-
-                highToLowPriceShortIcon.classList.remove('fa-solid', 'fa-arrow-up')
-                sortIconContainer.removeChild(highToLowPriceShortIcon)
-
-                const sortBackNormal = document.createElement('button')
-                sortBackNormal.classList.add('fa-solid', 'fa-arrow-down')
-                sortIconContainer.appendChild(sortBackNormal)
-
-                sortBackNormal.addEventListener('click', () => {
+                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
 
                     updateProducts()
-
-                    sortBackNormal.classList.remove('fa-solid', 'fa-arrow-down')
-                    sortIconContainer.removeChild(sortBackNormal)
-
-
-                    const resetsort = document.createElement('button')
-                    resetsort.classList.add('fa-solid', 'fa-arrows-up-down')
-                    sortIconContainer.appendChild(resetsort)
+                    sortProductsByNameAndPrice(sortCriteria)
 
                 })
             })
