@@ -104,34 +104,6 @@ input {
 
 }
 
-.sort-product-list {
-    /* width: 15px; */
-    background-color: #dddcdc;
-    border: 1px solid #bababa;
-    padding: 0%;
-    border-radius: 20px;
-    font-size: 14px;
-}
-
-.sort-product {
-
-    width: 134px;
-    font-size: 14px;
-    background-color: #dddcdc;
-
-}
-
-.sort-button {
-
-    width: 25px;
-    margin-left: 1%;
-
-}
-
-.sort-button button {
-    background-color: transparent;
-}
-
 .no-data {
     display: none;
     font-size: xx-large;
@@ -340,7 +312,6 @@ input {
     width: 95%;
     height: 55px;
     border-radius: 10px;
-    /* margin: auto; */
     margin-top: 5%;
 }
 
@@ -379,7 +350,6 @@ hr {
 }
 
 .js-product-out-of-stock {
-    /* pointer-events: none; */
     opacity: 0.5;
     cursor: not-allowed !important;
 }
