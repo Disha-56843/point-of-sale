@@ -164,7 +164,6 @@ function updateProductAvailability() {
     })
 }
 
-// script js 
 function sortSearch(category, searchInputValue) {
     let visibleProducts = false
     const nodata = document.querySelector('.no-data')
@@ -233,9 +232,6 @@ function updateCategoryUI(category) {
 
     localStorage.setItem('selectedCategory', category)
 }
-
-
-// script js over 
 
 
 function addToCart(product) {
@@ -415,123 +411,6 @@ document.getElementById('clear-all-button').addEventListener('click', function (
 
 showProducts()
 
-function sortProductsByNameAndPrice(sortCriteria) {
-    const productContainer = document.querySelector('.products-container')
-    const sortIconContainer = document.querySelector('.js-sort-icon')
-    const isOutOfStock = products.forEach((product) => product.isOutOfStock)
-    // const productElements = Array.from(productContainer.querySelectorAll('.products'))
-    // const isOutOfStock = document.querySelectorAll('.products').forEach((product) => {product.classList.contains('js-product-out-of-stock')})
-
-    sortIconContainer.innerHTML = ''
-
-    if (sortCriteria === 'select') {
-
-        updateProducts()
-
-    } else if (sortCriteria === 'Sort by: name') {
-
-        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="js-a-to-z-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
-
-        document.querySelector('.js-a-to-z-sort').addEventListener('click', () => {
-            products.sort((product1, product2) => {
-                // const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
-                // const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
-                return product1.name.toLowerCase().localeCompare(product2.name.toLowerCase)
-            })
-
-            productContainer.innerHTML = ''
-            products.forEach(product => {
-                const productElement = document.getElementById(product.id)
-                productContainer.appendChild(productElement)
-            })
-
-
-            sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-z-to-a-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
-
-            document.querySelector('.js-z-to-a-sort').addEventListener('click', () => {
-                products.sort((product1, product2) => {
-                    // const productName1 = productElement1.querySelector('.item-name').innerText.toLowerCase()
-                    // const productName2 = productElement2.querySelector('.item-name').innerText.toLowerCase()
-                    return product2.name.toLowerCase().localeCompare(product1.name.toLowerCase())
-                })
-
-                productElements.forEach(productElement => productContainer.appendChild(productElement))
-
-
-                zToASortIcon.classList.remove('fa-solid', 'fa-arrow-up')
-                sortIconContainer.removeChild(zToASortIcon)
-
-                const sortBackNormal = document.createElement('button')
-                sortBackNormal.classList.add('fa-solid', 'fa-arrow-down')
-                sortIconContainer.appendChild(sortBackNormal)
-
-                sortBackNormal.addEventListener('click', () => {
-
-                    updateProducts()
-                    sortProductsByNameAndPrice(sortCriteria)
-
-                })
-
-            })
-        })
-
-
-
-    } else if (sortCriteria === 'Sort by: price') {
-        sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="fa-solid fa-arrows-up-down js-low-to-high-sort" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M182.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 109.3l0 293.5L86.6 361.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 402.7l0-293.5 41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96z"/></svg>`
-
-        document.querySelector('.js-low-to-high-sort').addEventListener('click', () => {
-            products.sort((product1, product2) => {
-                // const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
-                // const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
-                return product1.price - product2.price
-            })
-
-            productContainer.innerHTML = ''
-            products.forEach(product => {
-                const productElement = document.getElementById(product.id)
-                productContainer.appendChild(productElement)
-            })
-
-
-            sortIconContainer.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class='js-high-to-low-sort' height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg>`
-
-            document.querySelector('.js-high-to-low-sort').addEventListener('click', () => {
-                products.sort((product1, product2) => {
-                    // const productPrice1 = parseFloat(productElement1.querySelector('.price-product').innerText)
-                    // const productPrice2 = parseFloat(productElement2.querySelector('.price-product').innerText)
-                    return product2.price - product1.price
-                })
-
-                productContainer.innerHTML = ''
-                products.forEach(product => {
-                    const productElement = document.getElementById(product.id)
-                    productContainer.appendChild(productElement)
-                })
-
-
-                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
-
-                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
-
-                    updateProducts()
-                    sortProductsByNameAndPrice(sortCriteria)
-
-                })
-            })
-        })
-
-    }
-
-
-}
-
-document.querySelector('.sort-product').addEventListener('change', (event) => {
-    const selectedSortCriteria = event.target.value
-    sortProductsByNameAndPrice(selectedSortCriteria)
-})
-
 document.addEventListener('keydown', function (event) {
     if (event.ctrlKey && (event.key === 'k' || event.key === 'K')) {
         event.preventDefault()
@@ -540,8 +419,6 @@ document.addEventListener('keydown', function (event) {
 
     }
 })
-
-// Local Storage start 
 
 const retrieveSavedSearchInputValue =
     localStorage.getItem('searchProduct') || ''
@@ -560,5 +437,3 @@ document.getElementById('search-product').addEventListener('input', (event) => {
 
 sortSearch(retrieveSavedCategory, retrieveSavedSearchInputValue)
 updateCategoryUI(retrieveSavedCategory)
-
-// local Storage end 
