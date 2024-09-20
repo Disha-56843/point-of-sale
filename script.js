@@ -58,7 +58,7 @@ const products = [
         id: 6,
         name: 'Spykar',
         description: 'Men Skinny Fit Jeans',
-        price: 11.5,
+        price: 11.50,
         image:
             'https://rukminim2.flixcart.com/image/612/612/xif0q/jean/i/8/k/32-udjeno1328-u-s-polo-assn-denim-co-original-imagypf6b4g5rfe6.jpeg?q=70',
         alt: 'Men_Jeans',
@@ -82,7 +82,7 @@ const products = [
         id: 8,
         name: 'TYFFYN',
         description: 'Women Black Jeans',
-        price: 13.5,
+        price: 13.50,
         image:
             'https://rukminim2.flixcart.com/image/612/612/xif0q/jean/x/h/p/28-wd-black-2z-nucouths-original-imahfysehpazsnns.jpeg?q=70',
         alt: 'Women_Jeans',
@@ -270,7 +270,7 @@ function renderCart() {
                 <button class="decrement">-</button>
                 <span class="quantity">${cartProduct.quantity}</span>
                 <button class="increment">+</button>
-                <span class="ordered-product-price">$${cartProduct.price * cartProduct.quantity}</span>
+                <span class="ordered-product-price">$${(cartProduct.price * cartProduct.quantity).toFixed(2)}</span>
                 <button class="remove-product">x</button>
             </div>`
 
@@ -444,23 +444,26 @@ function sortProductsByNameAndPrice(sortCriteria) {
                     return product2.name.toLowerCase().localeCompare(product1.name.toLowerCase())
                 })
 
-                productContainer.innerHTML = ''
-                products.forEach(product => {
-                    const productElement = document.getElementById(product.id)
-                    productContainer.appendChild(productElement)
-                })
+                productElements.forEach(productElement => productContainer.appendChild(productElement))
 
 
-                sortIconContainer.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="js-sort-back-normal" height='14px' width:'14px'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>`
+                zToASortIcon.classList.remove('fa-solid', 'fa-arrow-up')
+                sortIconContainer.removeChild(zToASortIcon)
 
-                document.querySelector('.js-sort-back-normal').addEventListener('click', () => {
+                const sortBackNormal = document.createElement('button')
+                sortBackNormal.classList.add('fa-solid', 'fa-arrow-down')
+                sortIconContainer.appendChild(sortBackNormal)
+
+                sortBackNormal.addEventListener('click', () => {
 
                     updateProducts()
                     sortProductsByNameAndPrice(sortCriteria)
 
                 })
+
             })
         })
+
 
 
     } else if (sortCriteria === 'Sort by: price') {
@@ -521,16 +524,9 @@ document.querySelector('.sort-product').addEventListener('change', (event) => {
 document.addEventListener('keydown', function (event) {
     if (event.ctrlKey && (event.key === 'k' || event.key === 'K')) {
         event.preventDefault()
-        const searchContainer = document.getElementById('search-product')
-        if (
-            searchContainer.style.display === 'none' ||
-            searchContainer.style.display === ''
-        ) {
-            searchContainer.style.display = 'block'
-            document.getElementById('search-product').focus()
-        } else {
-            searchContainer.style.display = 'none'
-        }
+
+        document.getElementById('search-product').focus()
+
     }
 })
 
