@@ -348,6 +348,47 @@ function addToCartEventHandlers() {
 
 }
 
+function loadCart() {
+    
+    const keys = Object.keys(localStorage)
+    cart = []
+
+    keys.forEach(key => {
+        if (key.startsWith('cartProduct-')) {
+            const id = key.split('-')[1]
+            const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
+
+
+            const product = products.find(product => product.id.toString() === id)
+            if (product) {
+
+                const existingProduct = cart.find(cartItem => cartItem.id.toString() === id)
+                if (existingProduct) {
+
+                    existingProduct.quantity = quantity
+                } else {
+
+                    cart.push({ ...product, quantity })
+                }
+            }
+        }
+    })
+
+    renderCart()
+    updateCart()
+    updateProductAvailability()
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    loadCart()
+
+})
+
+
+
 function updateCart() {
     const cartItemContainer = document.querySelector('.order-container')
     let subtotal = 0
