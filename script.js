@@ -172,7 +172,8 @@ function sortSearch(category, searchInputValue) {
 
     products.forEach((product) => {
 
-        const productElement = document.querySelector(`.products-${product.id}`)
+        const productElements = document.getElementsByClassName(`products-${product.id}`)
+        const productElement = productElements.length > 0 ? productElements[0] : null
 
         const productName = product.name
         const productPrice = product.price.toString()
@@ -242,6 +243,12 @@ function addToCart(product) {
     if (existingProduct && existingProduct.quantity < product.quantity_limit) {
         existingProduct.quantity++
 
+
+        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+        localStorage.setItem('cart', cartString)
+        // localStorage.setItem(`cartProduct-${product.id}-quantity`, existingProduct.quantity)
+        // localStorage.setItem('cart', JSON.stringify(cart))
+
         updateCart()
         updateProductAvailability()
     }
@@ -296,6 +303,13 @@ function addToCartEventHandlers() {
             if (cartProduct.quantity > 1) {
                 cartProduct.quantity--
 
+                const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+                localStorage.setItem('cart', cartString)
+                // localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
+                // localStorage.setItem('cart', JSON.stringify(cart))
+                // console.log(JSON.stringify(cart))
+
+
                 renderCart()
                 updateCart()
                 updateProductAvailability()
@@ -304,7 +318,11 @@ function addToCartEventHandlers() {
                     if (confirm('Do you want to remove this item from the cart?')) {
                         cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
 
-                        purchasedProductContainer.remove()
+                        // purchasedProductContainer.remove()
+                        // localStorage.setItem('cart', JSON.stringify(cart))
+                        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+                        localStorage.setItem('cart', cartString)
+
                         renderCart()
                         updateCart()
                         updateProductAvailability()
@@ -324,6 +342,10 @@ function addToCartEventHandlers() {
             if (cartProduct.quantity < quantityLimit) {
                 cartProduct.quantity++
 
+                const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+                localStorage.setItem('cart', cartString)
+                // localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
+                // localStorage.setItem('cart', JSON.stringify(cart))
                 renderCart()
                 updateCart()
                 updateProductAvailability()
@@ -335,6 +357,7 @@ function addToCartEventHandlers() {
 
         purchasedProductContainer.querySelector('.remove-product').addEventListener('click', function () {
             cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
+            // localStorage.removeItem(`cartProduct-${cartProduct.id}-quantity`)
             purchasedProductContainer.remove()
             // localStorage.setItem('cart', JSON.stringify(cart))
             const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
@@ -349,45 +372,61 @@ function addToCartEventHandlers() {
 }
 
 function loadCart() {
-    
-    const keys = Object.keys(localStorage)
+
+    // const localstorageProductKeys = Object.keys(localStorage)
+    // cart = []
+
+    // localstorageProductKeys.forEach(localstorageProductKey => {
+    //     if (localstorageProductKey.startsWith('cartProduct-')) {
+    //         const id = key.split('-')[1]
+    //         const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
+
+
+    //         const product = products.find(product => product.id.toString() === id)
+    //         if (product) {
+
+    //             const existingProduct = cart.find(cartItem => cartItem.id.toString() === id)
+    //             if (existingProduct) {
+
+    //                 existingProduct.quantity = quantity
+    //             } else {
+
+    //                 cart.push({ ...product, quantity })
+    //             }
+    //         }
+    //     }
+    // })
+
+    // const cartData = localStorage.getItem('cart')
+    // cart = cartData ? JSON.parse(cartData) : []
+
+
+    const cartString = localStorage.getItem('cart')
     cart = []
 
-    keys.forEach(key => {
-        if (key.startsWith('cartProduct-')) {
-            const id = key.split('-')[1]
-            const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
-
-
+    if (cartString) {
+       
+        const cartItems = cartString.split(';')
+        cartItems.forEach(item => {
+            const [id, quantity] = item.split(':')
             const product = products.find(product => product.id.toString() === id)
             if (product) {
-
-                const existingProduct = cart.find(cartItem => cartItem.id.toString() === id)
-                if (existingProduct) {
-
-                    existingProduct.quantity = quantity
-                } else {
-
-                    cart.push({ ...product, quantity })
-                }
+                cart.push({ ...product, quantity: parseInt(quantity) })
             }
-        }
-    })
+        })
+    }
+
 
     renderCart()
     updateCart()
     updateProductAvailability()
 }
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
     loadCart()
 
 })
-
-
 
 function updateCart() {
     const cartItemContainer = document.querySelector('.order-container')
@@ -439,6 +478,8 @@ document.getElementById('clear-all-button').addEventListener('click', function (
 
             while (cartItemList.firstChild) {
                 cartItemList.removeChild(cartItemList.firstChild)
+                localStorage.clear()
+
             }
         }
 
