@@ -110,7 +110,7 @@ function showProducts() {
 
     products.forEach((product) => {
 
-        productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer" data-category="${product.category}">
+        productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer">
             <h3 class="item-name">${product.name}</h3>
             <span class="description">${product.description}</span>
             <div class="bottom-part-of-product">
@@ -169,38 +169,43 @@ function sortSearch(category, searchInputValue) {
     let visibleProducts = false
     const nodata = document.querySelector('.no-data')
 
-    document.querySelectorAll('.products').forEach((product) => {
-        const productName = product.querySelector('.item-name').innerText
-        const productPrice = product.querySelector('.price-product').innerText
-        const productCategory = product.getAttribute('data-category')
-        const isOutOfStock = product.classList.contains('js-product-out-of-stock')
 
+
+    products.forEach((product) => {
+
+        const productElement = document.querySelector(`.products-${product.id}`)
+
+        const productName = product.name
+        const productPrice = product.price.toString()
+        const productCategory = product.category
+        const isOutOfStock = productElement.classList.contains('js-product-out-of-stock')
         const matchesCategory = category === 'all' || productCategory === category
-        const matchesSearch = productName.includes(searchInputValue) || productPrice.includes(searchInputValue)
+        const matchesSearch = productName.toLowerCase().includes(searchInputValue.toLowerCase()) || productPrice.includes(searchInputValue)
 
         if (matchesSearch) {
             if (category === 'all') {
-                product.style.display = 'block'
+
+                productElement.style.display = 'block'
                 if (isOutOfStock) {
-                    product.style.opacity = 0.5
+                    productElement.style.opacity = 0.5
                     visibleProducts = true
 
                     return
                 }
-                product.style.opacity = 1
+                productElement.style.opacity = 1
                 visibleProducts = true
             } else {
                 if (matchesCategory && !isOutOfStock) {
-                    product.style.display = 'block'
-                    product.style.opacity = 1
+                    productElement.style.display = 'block'
+                    productElement.style.opacity = 1
                     visibleProducts = true
 
                 } else {
-                    product.style.display = 'none'
+                    productElement.style.display = 'none'
                 }
             }
         } else {
-            product.style.display = 'none'
+            productElement.style.display = 'none'
         }
     })
 
@@ -216,11 +221,11 @@ function updateCategoryUI(category) {
         'Women Jeans': 'Women Jeans',
     }
 
-    document.querySelectorAll('.list-items').forEach((el) => {
-        if (el.innerHTML.trim() === categoryList[category]) {
-            el.classList.add('select')
+    document.querySelectorAll('.list-items').forEach((element) => {
+        if (element.innerHTML.trim() === categoryList[category]) {
+            element.classList.add('select')
         } else {
-            el.classList.remove('select')
+            element.classList.remove('select')
         }
     })
     const searchInputValue = document.getElementById('search-product').value
@@ -239,7 +244,7 @@ function addToCart(product) {
     const purchasedProductContainer = document.querySelector(`.orders-${product.id}`)
 
     if (existingProduct && existingProduct.quantity < product.quantity_limit) {
-        purchasedProductContainer.querySelector('.quantity').innerHTML = ++existingProduct.quantity
+        existingProduct.quantity++
 
         updateCart()
         updateProductAvailability()
@@ -249,6 +254,10 @@ function addToCart(product) {
 
         cart.push({ ...product, quantity: 1 })
 
+        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+        localStorage.setItem('cart', cartString)
+        // localStorage.setItem(`cartProduct-${product.id}-quantity`, 1)
+        // localStorage.setItem('cart', JSON.stringify(cart))
     }
 
     renderCart()
@@ -289,7 +298,7 @@ function addToCartEventHandlers() {
         purchasedProductContainer.querySelector('.decrement').addEventListener('click', function () {
 
             if (cartProduct.quantity > 1) {
-                purchasedProductContainer.querySelector('.quantity').innerHTML = --cartProduct.quantity
+                cartProduct.quantity--
 
                 renderCart()
                 updateCart()
@@ -317,7 +326,7 @@ function addToCartEventHandlers() {
             const quantityLimit = cartProduct.quantity_limit
 
             if (cartProduct.quantity < quantityLimit) {
-                purchasedProductContainer.querySelector('.quantity').innerHTML = ++cartProduct.quantity;
+                cartProduct.quantity++
 
                 renderCart()
                 updateCart()
@@ -330,8 +339,10 @@ function addToCartEventHandlers() {
 
         purchasedProductContainer.querySelector('.remove-product').addEventListener('click', function () {
             cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
-
             purchasedProductContainer.remove()
+            // localStorage.setItem('cart', JSON.stringify(cart))
+            const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
+            localStorage.setItem('cart', cartString)
             renderCart()
             updateCart()
             updateProductAvailability()
