@@ -239,30 +239,23 @@ function addToCart(product) {
 
     const existingProduct = cart.find(existingProductInCart => existingProductInCart.id === product.id)
     const purchasedProductContainer = document.querySelector(`.orders-${product.id}`)
-
+    
     if (existingProduct && existingProduct.quantity < product.quantity_limit) {
         existingProduct.quantity++
 
-
-        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
-        localStorage.setItem('cart', cartString)
-        // localStorage.setItem(`cartProduct-${product.id}-quantity`, existingProduct.quantity)
-        // localStorage.setItem('cart', JSON.stringify(cart))
-
+        localStorage.setItem(`cartProduct-${product.id}-quantity`, existingProduct.quantity)
+        
         updateCart()
         updateProductAvailability()
     }
-
+    
     else {
-
-        cart.push({ ...product, quantity: 1 })
-
-        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
-        localStorage.setItem('cart', cartString)
-        // localStorage.setItem(`cartProduct-${product.id}-quantity`, 1)
-        // localStorage.setItem('cart', JSON.stringify(cart))
+        
+        cart.push({ ...product, quantity: 1 })    
+        localStorage.setItem(`cartProduct-${product.id}-quantity`, 1)
+        
     }
-
+    
     renderCart()
     updateCart()
     updateProductAvailability()
@@ -302,38 +295,28 @@ function addToCartEventHandlers() {
 
             if (cartProduct.quantity > 1) {
                 cartProduct.quantity--
+            
+                localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
 
-                const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
-                localStorage.setItem('cart', cartString)
-                // localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
-                // localStorage.setItem('cart', JSON.stringify(cart))
-                // console.log(JSON.stringify(cart))
-
-
-                renderCart()
-                updateCart()
-                updateProductAvailability()
+                
             } else {
                 if (cartProduct.quantity === 1) {
                     if (confirm('Do you want to remove this item from the cart?')) {
                         cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
 
-                        // purchasedProductContainer.remove()
-                        // localStorage.setItem('cart', JSON.stringify(cart))
-                        const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
-                        localStorage.setItem('cart', cartString)
-
-                        renderCart()
-                        updateCart()
-                        updateProductAvailability()
-
+                        purchasedProductContainer.remove()
+                        localStorage.removeItem(`cartProduct-${cartProduct.id}-quantity`)
+                        
                         return
                     }
-
+                    
                     return
                 }
                 purchasedProductContainer.remove()
             }
+            renderCart()
+                updateCart()
+                updateProductAvailability()
         })
 
         purchasedProductContainer.querySelector('.increment').addEventListener('click', function () {
@@ -342,26 +325,24 @@ function addToCartEventHandlers() {
             if (cartProduct.quantity < quantityLimit) {
                 cartProduct.quantity++
 
-                const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
-                localStorage.setItem('cart', cartString)
-                // localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
-                // localStorage.setItem('cart', JSON.stringify(cart))
-                renderCart()
-                updateCart()
-                updateProductAvailability()
             } else {
                 alert('Cannot add more of this product to the cart. Quantity limit reached.')
             }
+            
+            localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
+            
+            renderCart()
+            updateCart()
+            updateProductAvailability()
         })
 
 
         purchasedProductContainer.querySelector('.remove-product').addEventListener('click', function () {
             cart.splice(cart.findIndex(cartItem => cartItem.id === cartProduct.id), 1)
-            // localStorage.removeItem(`cartProduct-${cartProduct.id}-quantity`)
+
+            localStorage.removeItem(`cartProduct-${cartProduct.id}-quantity`)
             purchasedProductContainer.remove()
-            // localStorage.setItem('cart', JSON.stringify(cart))
-            const cartString = cart.map(product => `${product.id}:${product.quantity}`).join(';')
-            localStorage.setItem('cart', cartString)
+
             renderCart()
             updateCart()
             updateProductAvailability()
@@ -373,49 +354,29 @@ function addToCartEventHandlers() {
 
 function loadCart() {
 
-    // const localstorageProductKeys = Object.keys(localStorage)
-    // cart = []
-
-    // localstorageProductKeys.forEach(localstorageProductKey => {
-    //     if (localstorageProductKey.startsWith('cartProduct-')) {
-    //         const id = key.split('-')[1]
-    //         const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
-
-
-    //         const product = products.find(product => product.id.toString() === id)
-    //         if (product) {
-
-    //             const existingProduct = cart.find(cartItem => cartItem.id.toString() === id)
-    //             if (existingProduct) {
-
-    //                 existingProduct.quantity = quantity
-    //             } else {
-
-    //                 cart.push({ ...product, quantity })
-    //             }
-    //         }
-    //     }
-    // })
-
-    // const cartData = localStorage.getItem('cart')
-    // cart = cartData ? JSON.parse(cartData) : []
-
-
-    const cartString = localStorage.getItem('cart')
+    const localstorageProductKeys = Object.keys(localStorage)
     cart = []
 
-    if (cartString) {
-       
-        const cartItems = cartString.split(';')
-        cartItems.forEach(item => {
-            const [id, quantity] = item.split(':')
+    localstorageProductKeys.forEach(localstorageProductKey => {
+        if (localstorageProductKey.startsWith('cartProduct-')) {
+            const id = localstorageProductKey.split('-')[1]
+            const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
+
+
             const product = products.find(product => product.id.toString() === id)
             if (product) {
-                cart.push({ ...product, quantity: parseInt(quantity) })
-            }
-        })
-    }
 
+                const existingProduct = cart.find(cartItem => cartItem.id.toString() === id)
+                if (existingProduct) {
+
+                    existingProduct.quantity = quantity
+                } else {
+
+                    cart.push({ ...product, quantity })
+                }
+            }
+        }
+    })
 
     renderCart()
     updateCart()
