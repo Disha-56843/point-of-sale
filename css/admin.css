@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.form-container {
+    width: 80%;
+    margin: auto;
+    padding: 10%;
+}
+
+h1 {
+    text-align: center;
+    margin: 6% 0%;
+}
+
+form {
+    width: 50%;
+    margin: auto;
+    background-color: #fdf3f0;
+    text-align: left;
+    padding: 1.5%;
+}
+
+.product-detail {
+    margin: 4% 5%;
+}
+
+.submit {
+    width: 15%;
+    font-size: medium;
+    display: block;
+    margin: auto;
+    margin-top: 5%;
+    padding: 1%;
+    background-color:rgb(46, 104, 104);
+    color: #fff;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

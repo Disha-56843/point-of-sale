@@ -361,7 +361,6 @@ function loadCart() {
             const id = localstorageProductKey.split('-')[1]
             const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
 
-
             const product = products.find(product => product.id.toString() === id)
             if (product) {
 
@@ -421,7 +420,7 @@ function updateProducts() {
     updateCategoryUI(retrieveSavedCategory)
 }
 
-document.getElementById('clear-all-button').addEventListener('click', function () {    
+document.getElementById('clear-all-button').addEventListener('click', function () {
     if (cart.length > 0) {
         if (confirm('Are you sure you want to clear cart')) {
             document.querySelector('.order-container').innerHTML = ''
@@ -433,7 +432,7 @@ document.getElementById('clear-all-button').addEventListener('click', function (
     else {
         alert('No item to clear')
     }
-    
+
     updateInvoice()
 })
 
