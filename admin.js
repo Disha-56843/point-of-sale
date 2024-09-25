@@ -7,17 +7,19 @@ function addProductInLocalstorege() {
     const productImage = document.querySelector('.product-image').value
     const productQuantity = document.querySelector('.product-quantity').value
 
+    let productId = parseInt(Math.random() * 100)
 
     const imageValidation = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi
 
     if (!productImage.match(imageValidation)) {
         alert('invalid URL')
         return
-    }
+    }   
 
     let product = 
     {
-        'productNmae' : productName,
+        'productId' : productId,
+        'productName' : productName,
         'productDescription' : productDescription,
         'productPrice' : productPrice,
         'productCategory' : productCategory,
@@ -25,20 +27,7 @@ function addProductInLocalstorege() {
         'productQuantity' : productQuantity
     }
 
-    localStorage.setItem('product', JSON.stringify(product))
-
-
-    // localStorage.setItem('product', `${productId}${productName}${productDescription}${productPrice}${productCategory}${productImage}${productQuantity}`)
-    // localStorage.setItem(`productName-${productId}`, productName)
-    // localStorage.setItem(`productDescription-${productId}`, productDescription)
-    // localStorage.setItem(`productPrice-${productId}`, productPrice)
-    // localStorage.setItem(`productCategory-${productId}`, productCategory)
-    // localStorage.setItem(`productImage-${productId}`, productImage)
-    // localStorage.setItem(`productQuantity-${productId}`, productQuantity)
-
-
-
-    
+    localStorage.setItem(`product-${productId}`, JSON.stringify(product))    
 
 }
 
