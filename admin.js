@@ -1,5 +1,4 @@
-function addProductInLocalstorege() {
-    
+function addProductInLocalStorage() {
     const productName = document.querySelector('.product-name').value
     const productDescription = document.querySelector('.product-description').value
     const productPrice = document.querySelector('.product-price').value
@@ -9,26 +8,24 @@ function addProductInLocalstorege() {
 
     let productId = parseInt(Math.random() * 100)
 
-    const imageValidation = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi
+    let products = []
 
-    if (!productImage.match(imageValidation)) {
-        alert('invalid URL')
-        return
-    }   
-
-    let product = 
-    {
-        'productId' : productId,
-        'productName' : productName,
-        'productDescription' : productDescription,
-        'productPrice' : productPrice,
-        'productCategory' : productCategory,
-        'productImage' : productImage,
-        'productQuantity' : productQuantity
+    if (localStorage.getItem('products')) {
+        products = JSON.parse(localStorage.getItem('products'))
     }
 
-    localStorage.setItem(`product-${productId}`, JSON.stringify(product))    
+    let product = {
+        id: productId,
+        name: productName,
+        description: productDescription,
+        price: productPrice,
+        image: productImage,
+        alt: productName,
+        category: productCategory,
+        quantity_limit: productQuantity
+    }
 
+    localStorage.setItem('products', JSON.stringify([...products, product]))
 }
 
-document.querySelector('.submit').addEventListener('click', addProductInLocalstorege)
+document.querySelector('.submit').addEventListener('click', addProductInLocalStorage)
