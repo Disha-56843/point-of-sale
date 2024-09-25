@@ -1,4 +1,4 @@
-const products = [
+let products = [
     {
         id: 1,
         name: 'STONEBERG',
@@ -437,6 +437,11 @@ document.getElementById('clear-all-button').addEventListener('click', function (
     updateInvoice()
 })
 
+if (localStorage.getItem('products')) {
+    products = JSON.parse(localStorage.getItem('products'))
+    console.log('hey')
+}
+
 showProducts()
 
 document.addEventListener('keydown', function (event) {
@@ -448,10 +453,8 @@ document.addEventListener('keydown', function (event) {
     }
 })
 
-const retrieveSavedSearchInputValue =
-    localStorage.getItem('searchProduct') || ''
+const retrieveSavedSearchInputValue = localStorage.getItem('searchProduct') || ''
 const retrieveSavedCategory = localStorage.getItem('selectedCategory') || 'all'
-
 
 
 document.getElementById('search-product').value = retrieveSavedSearchInputValue
