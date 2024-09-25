@@ -126,7 +126,7 @@ function showProducts() {
 
         document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
             addToCart(product)
-            updateCart()
+            updateInvoice()
         })
 
     })
@@ -138,7 +138,7 @@ function updateProductAvailability() {
         const productElements = document.querySelectorAll('.products')
 
         productElements.forEach((productElement) => {
-            const productName = productElement.querySelector('.item-name').innerText
+            const productName = productElement.querySelector('.item-name').innerHTML
 
             if (productName === product.name) {
                 let quantityInCart = 0
@@ -238,30 +238,29 @@ function updateCategoryUI(category) {
 function addToCart(product) {
 
     const existingProduct = cart.find(existingProductInCart => existingProductInCart.id === product.id)
-    const purchasedProductContainer = document.querySelector(`.orders-${product.id}`)
-    
+
     if (existingProduct && existingProduct.quantity < product.quantity_limit) {
         existingProduct.quantity++
 
         localStorage.setItem(`cartProduct-${product.id}-quantity`, existingProduct.quantity)
-        
-        updateCart()
+
+        updateInvoice()
         updateProductAvailability()
     }
-    
+
     else {
-        
-        cart.push({ ...product, quantity: 1 })    
+
+        cart.push({ ...product, quantity: 1 })
         localStorage.setItem(`cartProduct-${product.id}-quantity`, 1)
-        
+
     }
-    
-    renderCart()
-    updateCart()
+
+    displayCart()
+    updateInvoice()
     updateProductAvailability()
 }
 
-function renderCart() {
+function displayCart() {
 
     const cartItemContainer = document.querySelector('.order-container')
 
@@ -295,10 +294,10 @@ function addToCartEventHandlers() {
 
             if (cartProduct.quantity > 1) {
                 cartProduct.quantity--
-            
+
                 localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
 
-                
+
             } else {
                 if (cartProduct.quantity === 1) {
                     if (confirm('Do you want to remove this item from the cart?')) {
@@ -306,17 +305,17 @@ function addToCartEventHandlers() {
 
                         purchasedProductContainer.remove()
                         localStorage.removeItem(`cartProduct-${cartProduct.id}-quantity`)
-                        
+
                         return
                     }
-                    
+
                     return
                 }
                 purchasedProductContainer.remove()
             }
-            renderCart()
-                updateCart()
-                updateProductAvailability()
+            displayCart()
+            updateInvoice()
+            updateProductAvailability()
         })
 
         purchasedProductContainer.querySelector('.increment').addEventListener('click', function () {
@@ -328,11 +327,11 @@ function addToCartEventHandlers() {
             } else {
                 alert('Cannot add more of this product to the cart. Quantity limit reached.')
             }
-            
+
             localStorage.setItem(`cartProduct-${cartProduct.id}-quantity`, cartProduct.quantity)
-            
-            renderCart()
-            updateCart()
+
+            displayCart()
+            updateInvoice()
             updateProductAvailability()
         })
 
@@ -343,8 +342,8 @@ function addToCartEventHandlers() {
             localStorage.removeItem(`cartProduct-${cartProduct.id}-quantity`)
             purchasedProductContainer.remove()
 
-            renderCart()
-            updateCart()
+            displayCart()
+            updateInvoice()
             updateProductAvailability()
 
         })
@@ -378,8 +377,8 @@ function loadCart() {
         }
     })
 
-    renderCart()
-    updateCart()
+    displayCart()
+    updateInvoice()
     updateProductAvailability()
 }
 
@@ -389,31 +388,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-function updateCart() {
-    const cartItemContainer = document.querySelector('.order-container')
+function updateInvoice() {
     let subtotal = 0
 
-    Array.from(cartItemContainer.children).forEach((orderContainer) => {
-        const priceText = orderContainer
-            .querySelector('.ordered-product-price')
-            .innerHTML.replace('$', '')
-        const price = parseFloat(priceText)
+    cart.forEach((orderContainer) => {
 
-        subtotal += price
+        subtotal = orderContainer.price * orderContainer.quantity
     })
 
     const discount = (5 * subtotal) / 100
     const salesTax = (18 * subtotal) / 100
     const total = subtotal - discount + salesTax
 
-    document.querySelector('.js-subtotal').innerText = `$${subtotal.toFixed(2)}`
-    document.querySelector('.js-discount').innerHTML = `- $${discount.toFixed(
-        2
-    )}`
+    document.querySelector('.js-subtotal').innerHTML = `$${subtotal.toFixed(2)}`
+    document.querySelector('.js-discount').innerHTML = `- $${discount.toFixed(2)}`
     document.querySelector('.js-sales-tax').innerHTML = `$${salesTax.toFixed(2)}`
-    document.querySelector('.js-total-of-product').innerHTML = `$${total.toFixed(
-        2
-    )}`
+    document.querySelector('.js-total-of-product').innerHTML = `$${total.toFixed(2)}`
 
     updateProducts()
 }
@@ -431,25 +421,20 @@ function updateProducts() {
     updateCategoryUI(retrieveSavedCategory)
 }
 
-document.getElementById('clear-all-button').addEventListener('click', function () {
-    const cartItemList = document.querySelector('.order-container')
-    if (cartItemList.children.length > 0) {
+document.getElementById('clear-all-button').addEventListener('click', function () {    
+    if (cart.length > 0) {
         if (confirm('Are you sure you want to clear cart')) {
-
-
-            while (cartItemList.firstChild) {
-                cartItemList.removeChild(cartItemList.firstChild)
-                localStorage.clear()
-
-            }
+            document.querySelector('.order-container').innerHTML = ''
+            cart = []
+            localStorage.clear()
         }
 
     }
     else {
         alert('No item to clear')
     }
-    cart = []
-    updateCart()
+    
+    updateInvoice()
 })
 
 showProducts()
