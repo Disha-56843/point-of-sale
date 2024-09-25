@@ -31,13 +31,23 @@
                 <input 
                     type="number" 
                     class="product-price"
+                    min="0" 
+                    max="1000" 
+                    step="0.01"
                 >
                 <br>
             </div>
             <div class="product-detail">
                 <label>Product Category</label>
                 <br>
-                <input class="product-category">
+                <select class="product-category">
+                    <option value="">Select</option>
+                    <option value="Men Shirt">Men Shirt</option>
+                    <option value="Women Shirt">Women Shirt</option>
+                    <option value="Men Jeans">Men Jeans</option>
+                    <option value="Women Jeans">Women Jeans</option>
+                </select>
+                
                 <br>
             </div>
             <div class="product-detail">

@@ -361,6 +361,7 @@ function loadCart() {
             const id = localstorageProductKey.split('-')[1]
             const quantity = localStorage.getItem(`cartProduct-${id}-quantity`)
 
+
             const product = products.find(product => product.id.toString() === id)
             if (product) {
 
