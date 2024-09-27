@@ -108,27 +108,34 @@ let cart = []
 function showProducts() {
     const productContainer = document.querySelector('.products-container')
 
-    products.forEach((product) => {
+    fetch('https://fakestoreapi.com/products')
+    .then(response => response.json())
+    .then(apiProducts => {
 
-        productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer">
-            <h3 class="item-name">${product.name}</h3>
-            <span class="description">${product.description}</span>
-            <div class="bottom-part-of-product">
-                <span class="dollar">$<span class="price-product">${product.price}</span></span>
-                <img src="${product.image}" alt="${product.name}" class="card-img">
-            </div>
-        </div>`
+        products = []
+        products = apiProducts
 
-        updateProductAvailability()
-    })
+        products.forEach((product) => {
 
-    products.forEach((product) => {
+            productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer">
+                <h3 class="item-name">${product.name}</h3>
+                <span class="description">${product.description}</span>
+                <div class="bottom-part-of-product">
+                    <span class="dollar">$<span class="price-product">${product.price}</span></span>
+                    <img src="${product.image}" alt="${product.name}" class="card-img">
+                </div>
+            </div>`
 
-        document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
-            addToCart(product)
-            updateInvoice()
+            updateProductAvailability()
         })
-
+        products.forEach((product) => {
+            
+            document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
+                addToCart(product)
+                updateInvoice()
+            })
+            
+        })
     })
 
 }
