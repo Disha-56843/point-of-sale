@@ -1,142 +1,54 @@
-let products = [
-    {
-        id: 1,
-        name: 'STONEBERG',
-        description: 'Men Formal Shirt',
-        price: 1.75,
-        image: 'https://tinyurl.com/men-striped-formal-shirt',
-        alt: 'Men_Shirt',
-        category: 'Men Shirt',
-        quantity_limit: 4,
-    },
-
-    {
-        id: 2,
-        name: 'FIBERMILL',
-        description: 'Men Printed Shirt',
-        price: 11.75,
-        image: 'https://tinyurl.com/men-printed-casual-shirt',
-        alt: 'Men_Shirt',
-        category: 'Men Shirt',
-        quantity_limit: 6,
-    },
-
-    {
-        id: 3,
-        name: 'CHEMISTRY',
-        description: 'Women Casual Shirt',
-        price: 12.75,
-        image: 'https://tinyurl.com/women-casual-shirt',
-        alt: 'Women_Shirt',
-        category: 'Women Shirt',
-        quantity_limit: 3,
-    },
-
-    {
-        id: 4,
-        name: 'TURRITOPSIS',
-        description: 'Women Retro Shirts',
-        price: 11.25,
-        image: 'https://tinyurl.com/women-classic-retro-shirts',
-        alt: 'Women_Shirt',
-        category: 'Women Shirt',
-        quantity_limit: 7,
-    },
-
-    {
-        id: 5,
-        name: 'zenesty',
-        description: 'Women Casual Shirt',
-        price: 13.75,
-        image: 'https://tinyurl.com/women-solid-casual-shirt',
-        alt: 'Women_Shirt',
-        category: 'Women Shirt',
-        quantity_limit: 2,
-    },
-
-    {
-        id: 6,
-        name: 'Spykar',
-        description: 'Men Skinny Fit Jeans',
-        price: 11.50,
-        image:
-            'https://rukminim2.flixcart.com/image/612/612/xif0q/jean/i/8/k/32-udjeno1328-u-s-polo-assn-denim-co-original-imagypf6b4g5rfe6.jpeg?q=70',
-        alt: 'Men_Jeans',
-        category: 'Men Jeans',
-        quantity_limit: 9,
-    },
-
-    {
-        id: 7,
-        name: 'JACK & JONES',
-        description: 'Men Skinny Fit Jeans',
-        price: 10.75,
-        image:
-            'https://rukminim2.flixcart.com/image/612/612/xif0q/jean/x/s/o/32-fmjen2840-flying-machine-original-imagzrsja5zpajrz.jpeg?q=70',
-        alt: 'Men_Jeans',
-        category: 'Men Jeans',
-        quantity_limit: 7,
-    },
-
-    {
-        id: 8,
-        name: 'TYFFYN',
-        description: 'Women Black Jeans',
-        price: 13.50,
-        image:
-            'https://rukminim2.flixcart.com/image/612/612/xif0q/jean/x/h/p/28-wd-black-2z-nucouths-original-imahfysehpazsnns.jpeg?q=70',
-        alt: 'Women_Jeans',
-        category: 'Women Jeans',
-        quantity_limit: 10,
-    },
-
-    {
-        id: 9,
-        name: 'Miss Chase',
-        description: 'Women Black Jeans',
-        price: 16.75,
-        image:
-            'https://rukminim2.flixcart.com/image/612/612/l12h1u80/jean/m/l/q/34-jeans-black2-4-zayla-original-imagcpy6jgjj43um.jpeg?q=70',
-        alt: 'Women_Jeans',
-        category: 'Women Jeans',
-        quantity_limit: 4,
-    },
-]
+let products = []
 
 let cart = []
 
 function showProducts() {
     const productContainer = document.querySelector('.products-container')
+    showCategory()
 
-    fetch('https://fakestoreapi.com/products')
-    .then(response => response.json())
-    .then(apiProducts => {
+    fetch('https://fakestoreapi.com/products?limit=5')
+        .then(response => response.json())
+        .then(apiProducts => {
 
-        products = []
-        products = apiProducts
+            apiProducts.forEach(product => {
 
-        products.forEach((product) => {
+                products.push({ ...product, name: product.title })
 
-            productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer">
-                <h3 class="item-name">${product.name}</h3>
-                <span class="description">${product.description}</span>
-                <div class="bottom-part-of-product">
-                    <span class="dollar">$<span class="price-product">${product.price}</span></span>
-                    <img src="${product.image}" alt="${product.name}" class="card-img">
-                </div>
-            </div>`
-
-            updateProductAvailability()
-        })
-        products.forEach((product) => {
-            
-            document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
-                addToCart(product)
-                updateInvoice()
             })
-            
+
+            products.forEach((product) => {
+
+                let shortDescription
+                let shortName
+
+                if (product.description.length > 30) {
+                    shortDescription = `${product.description.slice(0, 30)}...`
+                }
+
+                if (product.description.length > 20) {
+                    shortName = `${product.description.slice(0, 20)}...`
+                }
+
+                productContainer.innerHTML += `<div class="products products-${product.id}" style="cursor: pointer">
+                                                    <h3 class="item-name">${shortName}</h3>
+                                                    <span class="description">${shortDescription}</span>
+                                                    <div class="bottom-part-of-product">
+                                                        <span class="dollar">$<span class="price-product">${product.price}</span></span>
+                                                        <img src="${product.image}" alt="${product.name}" class="card-img">
+                                                    </div>
+                                                </div>`
+
+                // updateProductAvailability()
+            })
+            products.forEach((product) => {
+
+                document.querySelector(`.products-${product.id}`).addEventListener('click', () => {
+                    addToCart(product)
+                    updateInvoice()
+                })
+
+            })
         })
-    })
 
 }
 
@@ -171,76 +83,120 @@ function updateProductAvailability() {
     })
 }
 
+function showCategory() {
+
+    const categoryList = document.querySelector('.category-list')
+
+    fetch('https://fakestoreapi.com/products/categories')
+        .then(response => response.json())
+        .then(apiCategories => {
+
+            categoryList.innerHTML += `<li class="list-items select"onclick="updateCategoryUI('all')">All items</li>`
+
+            apiCategories.forEach(category => {
+                categoryList.innerHTML += `<li class="list-items select"onclick="updateCategoryUI('${category}')">${category}</li>`
+            })
+            // <li class="list-items select"onclick="updateCategoryUI(${apiCategory[1]})">${apiCategory[1]}</li>
+            // <li class="list-items select"onclick="updateCategoryUI(${apiCategory[2]})">${apiCategory[2]}</li>
+            // <li class="list-items select"onclick="updateCategoryUI(${apiCategory[3]})">${apiCategory[3]}</li>`
+        })
+
+
+}
+
 function sortSearch(category, searchInputValue) {
     let visibleProducts = false
     const nodata = document.querySelector('.no-data')
 
+    fetch(`https://fakestoreapi.com/products/category/${category}`)
+        .then(response => response.json())
+        .then(products => {
+            // console.log(products)
+            console.log(category)
 
+            products.forEach((product) => {
 
-    products.forEach((product) => {
+                const productElements = document.getElementsByClassName(`products-${product.id}`)
+                const productElement = ''
 
-        const productElements = document.getElementsByClassName(`products-${product.id}`)
-        const productElement = productElements.length > 0 ? productElements[0] : null
-
-        const productName = product.name
-        const productPrice = product.price.toString()
-        const productCategory = product.category
-        const isOutOfStock = productElement.classList.contains('js-product-out-of-stock')
-        const matchesCategory = category === 'all' || productCategory === category
-        const matchesSearch = productName.toLowerCase().includes(searchInputValue.toLowerCase()) || productPrice.includes(searchInputValue)
-
-        if (matchesSearch) {
-            if (category === 'all') {
-
-                productElement.style.display = 'block'
-                if (isOutOfStock) {
-                    productElement.style.opacity = 0.5
-                    visibleProducts = true
-
-                    return
+                if (productElements.length > 0) {
+                    productElement = productElements[0]
                 }
-                productElement.style.opacity = 1
-                visibleProducts = true
-            } else {
-                if (matchesCategory && !isOutOfStock) {
-                    productElement.style.display = 'block'
-                    productElement.style.opacity = 1
-                    visibleProducts = true
 
+                const productName = product.name
+                const productPrice = product.price.toString()
+                const productCategory = product.category
+                // console.log(productCategory)
+
+                const isOutOfStock = productElement.classList.contains('js-product-out-of-stock')
+                const matchesCategory = category === 'all' || productCategory === category
+                const matchesSearch = productName.toLowerCase().includes(searchInputValue.toLowerCase()) || productPrice.includes(searchInputValue)
+
+                if (matchesSearch) {
+                    if (category === 'all') {
+
+                        productElement.style.display = 'block'
+                        if (isOutOfStock) {
+                            productElement.style.opacity = 0.5
+                            visibleProducts = true
+
+                            return
+                        }
+                        productElement.style.opacity = 1
+                        visibleProducts = true
+                    } else {
+                        if (matchesCategory && !isOutOfStock) {
+                            productElement.style.display = 'block'
+                            productElement.style.opacity = 1
+                            visibleProducts = true
+
+                        } else {
+                            productElement.style.display = 'none'
+                        }
+                    }
                 } else {
                     productElement.style.display = 'none'
                 }
-            }
-        } else {
-            productElement.style.display = 'none'
-        }
-    })
-
-    nodata.style.display = visibleProducts ? 'none' : 'block'
+                nodata.style.display = visibleProducts ? 'none' : 'block'
+            })
+        })
+        .catch(error => {
+            console.error('Error fetching products:', error)
+        })
 }
 
 function updateCategoryUI(category) {
-    const categoryList = {
-        all: 'All items',
-        'Men Shirt': 'Men Shirt',
-        'Women Shirt': 'Women Shirt',
-        'Men Jeans': 'Men Jeans',
-        'Women Jeans': 'Women Jeans',
-    }
 
-    document.querySelectorAll('.list-items').forEach((element) => {
-        if (element.innerHTML.trim() === categoryList[category]) {
-            element.classList.add('select')
-        } else {
-            element.classList.remove('select')
+    fetch('https://fakestoreapi.com/products/categories')
+        .then(response => response.json())
+        .then(apiCategory => {
+
+
+            let categoryList = {
+                all: 'All items',
+            }
+            
+            apiCategory.forEach(category => {
+                categoryList = { 'category': category }
+                // console.log(categoryList)
+            })
+
+
+            document.querySelectorAll('.list-items').forEach((element) => {
+                if (element.innerHTML.trim() === categoryList[category]) {
+                    element.classList.add('select')
+                } else {
+                    element.classList.remove('select')
+                }
+            })
+            const searchInputValue = document.getElementById('search-product').value
+            sortSearch(category, searchInputValue)
+
+            localStorage.setItem('selectedCategory', category)
         }
-    })
-    const searchInputValue = document.getElementById('search-product').value
-    sortSearch(category, searchInputValue)
-
-    localStorage.setItem('selectedCategory', category)
+        )
+        .catch(error => console.error('Error fetching categories:', error))
 }
-
 
 function addToCart(product) {
 
@@ -417,7 +373,7 @@ function updateInvoice() {
 
 function updateProducts() {
     document.querySelector('.products-container').innerHTML = ''
-    showProducts()
+    // showProducts()
 
     const retrieveSavedSearchInputValue =
         localStorage.getItem('searchProduct') || ''
